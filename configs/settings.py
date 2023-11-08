@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     # my_apps
     "core",
     "apps.users",
-    # "apps.auth",
+    "apps.auth",
 ]
 
 MIDDLEWARE = [

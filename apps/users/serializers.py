@@ -21,6 +21,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+
     class Meta:
         model = UserModel
         fields = (
@@ -57,5 +59,7 @@ class UserSerializer(serializers.ModelSerializer):
     @atomic
     def create(self, validated_data: dict):
         profile = validated_data.pop("profile")
-        user = UserModel.objects.create_user(profile=profile, **validated_data)
+        profile = ProfileModel.objects.create(**profile)
+        print(profile)
+        user = UserModel.objects.create_user(**validated_data)
         return user

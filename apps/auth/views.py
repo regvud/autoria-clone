@@ -11,3 +11,5 @@ class MeView(generics.GenericAPIView):
     def get(self, *args, **kwargs):
         serializer = self.get_serializer(self.request.user)
         return Response(serializer.data, status.HTTP_200_OK)
+
+

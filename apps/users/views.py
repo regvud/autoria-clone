@@ -7,6 +7,11 @@ UserModel = get_user_model()
 
 
 # Create your views here.
-class UserListCreateView(generics.ListAPIView):
+class UserListCreateView(generics.ListCreateAPIView):
     queryset = UserModel.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserModel
     serializer_class = UserSerializer

@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core import validators as V
 from django.db import models
-from django.db.models.fields import related
 
 from apps.users.managers import UserManager
 from core.models import BaseModel
@@ -36,7 +35,6 @@ class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=True)
-    last_login = models.DateTimeField(null=True)
     profile = models.OneToOneField(
         ProfileModel, on_delete=models.CASCADE, related_name="user", null=True
     )
