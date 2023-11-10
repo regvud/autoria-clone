@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core import validators as V
 from django.db import models
 
-from apps.carshops.models import CarShopModel
 from apps.users.managers import UserManager
 from core.models import BaseModel
 
@@ -38,11 +37,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
     profile = models.OneToOneField(
         ProfileModel, on_delete=models.CASCADE, related_name="user", null=True
     )
-    carshop = models.OneToOneField(
-        CarShopModel, on_delete=models.CASCADE, related_name="user", null=True
-    )
 
     USERNAME_FIELD = "email"
 
     objects = UserManager()
-    

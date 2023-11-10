@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     AdminToUserView,
+    UserAddCarshopView,
     UserBlockView,
     UserCarCreateView,
     UserListCreateView,
@@ -16,7 +17,12 @@ from .views import (
 
 urlpatterns = [
     path("", UserListCreateView.as_view(), name="user_list"),
-    path("/<int:pk>", UserRetrieveUpdateDestroyView.as_view(), name="user_retrieve"),
+    path("/add_carshop", UserAddCarshopView.as_view(), name="user_add_carshop"),
+    path(
+        "/<int:pk>",
+        UserRetrieveUpdateDestroyView.as_view(),
+        name="user_retrieve_update_destroy",
+    ),
     path("/<int:pk>/create_car", UserCarCreateView.as_view(), name="user_create_car"),
     path(
         "/<int:pk>/user_to_admin",

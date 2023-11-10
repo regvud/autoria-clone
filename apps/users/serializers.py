@@ -3,6 +3,7 @@ from rest_framework import serializers
 from rest_framework.authentication import get_user_model
 
 from apps.cars.serializers import CarSerializer
+from apps.carshops.serializers import CarShopSerializer
 from apps.users.models import ProfileModel
 
 UserModel = get_user_model()
@@ -23,6 +24,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
+    carshop = CarShopSerializer(many=True, read_only=True)
     cars = CarSerializer(many=True, read_only=True)
 
     class Meta:
@@ -42,6 +44,7 @@ class UserSerializer(serializers.ModelSerializer):
             "updated_at",
             "profile",
             "cars",
+            "carshop",
         )
 
         read_only_fields = (
@@ -55,6 +58,9 @@ class UserSerializer(serializers.ModelSerializer):
             "last_login",
             "created_at",
             "updated_at",
+            "profile",
+            "cars",
+            "carshop",
         )
 
         extra_kwargs = {

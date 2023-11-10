@@ -5,7 +5,7 @@ from django.core import validators as v
 from django.db import models
 
 from apps.users.models import UserModel
-from core.enums.car_enum import CarEnum
+from core.enums.model_enums.car_enum import CarEnum
 from core.models import BaseModel
 
 from .choices import BodyChoices, CurrencyChoices

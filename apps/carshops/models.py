@@ -3,10 +3,12 @@ from django.db import models
 from rest_framework.authentication import get_user_model
 from rest_framework.fields import RegexValidator
 
-from core.enums.carshop_enum import CarShopEnum
+from core.enums.model_enums.carshop_enum import CarShopEnum
 from core.models import BaseModel
 
 from .choices import RoleChoices
+
+UserModel = get_user_model()
 
 
 class CarShopModel(BaseModel):
@@ -15,6 +17,9 @@ class CarShopModel(BaseModel):
 
     name = models.CharField(
         max_length=30, validators=[RegexValidator(*CarShopEnum.NAME.value)]
+    )
+    user = models.ForeignKey(
+        UserModel, on_delete=models.CASCADE, related_name="carshop"
     )
 
 

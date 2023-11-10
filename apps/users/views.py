@@ -1,27 +1,28 @@
-from operator import ge
-
-from django.conf.locale import de
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import get_user_model
 from rest_framework.response import Response
 
 from apps.cars.serializers import CarSerializer
+from apps.carshops.serializers import CarShopSerializer
 from apps.users.serializers import UserSerializer
 
 UserModel = get_user_model()
 
 
+# Get User list
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = UserModel.objects.all()
     serializer_class = UserSerializer
 
 
+# Retrieve, Update, Destroy user
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserModel
     serializer_class = UserSerializer
 
 
+# Create car for user
 class UserCarCreateView(generics.GenericAPIView):
     serializer_class = UserSerializer
 
@@ -36,6 +37,29 @@ class UserCarCreateView(generics.GenericAPIView):
         return Response(self.serializer_class(owner).data, status.HTTP_200_OK)
 
 
+# Add carshop for user
+class UserAddCarshopView(generics.GenericAPIView):
+    def post(self, *args, **kwargs):
+        user = self.request.user
+
+        if user.is_carshop:
+            return Response("User already has carshop")
+
+        user.is_carshop = True
+        user.save()
+
+        carshop = self.request.data
+        carshop_serializer = CarShopSerializer(data=carshop)
+        carshop_serializer.is_valid(raise_exception=True)
+        carshop_serializer.save(user=user)
+
+        return Response(carshop_serializer.data, status.HTTP_200_OK)
+
+
+# Change permissions for user
+
+
+# Admin permissions
 class UserToAdminView(generics.GenericAPIView):
     serializer_class = UserSerializer
 
@@ -72,6 +96,7 @@ class AdminToUserView(generics.GenericAPIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
+# Block/unblock user
 class UserBlockView(generics.GenericAPIView):
     serializer_class = UserSerializer
 
@@ -108,6 +133,7 @@ class UserUnblockView(generics.GenericAPIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
+# Premium permissions
 class UserToPremiumView(generics.GenericAPIView):
     serializer_class = UserSerializer
 
@@ -144,6 +170,7 @@ class UserToNonPremiumView(generics.GenericAPIView):
         return Response(serializer.data, status.HTTP_200_OK)
 
 
+# Carshop permissions
 class UserToCarshop(generics.GenericAPIView):
     serializer_class = UserSerializer
 
@@ -157,12 +184,6 @@ class UserToCarshop(generics.GenericAPIView):
             return Response("User has is_carshop")
 
         user.is_carshop = True
-        print(user.is_carshop)
-        print(user.is_carshop)
-        print(user.is_carshop)
-        print(user.is_carshop)
-        print(user.is_carshop)
-        print(user.is_carshop)
         user.save()
         serializer = self.get_serializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
