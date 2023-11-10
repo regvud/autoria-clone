@@ -7,17 +7,38 @@ from apps.cars.serializers import CarSerializer
 
 
 class CarListView(generics.ListAPIView):
+    """
+    GET:
+        Get all cars
+    """
+
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
     filterset_class = CarFilter
 
 
 class CarRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get Car by ID
+    put:
+        Update Car by ID
+    patch:
+        Partial update Car by ID
+    delete:
+        Delete Car by ID
+    """
+
     queryset = CarModel.objects.all()
     serializer_class = CarSerializer
 
 
 class CarByAvgPriceView(generics.GenericAPIView):
+    """
+    GET:
+        Get avg_price of requested car
+    """
+
     serializer_class = CarSerializer
 
     def get(self, *args, **kwargs):

@@ -7,17 +7,38 @@ from apps.carshops.serializers import CarShopSerializer, StaffSerializer
 
 # Carshop list
 class CarShopListView(generics.ListAPIView):
+    """
+    GET:
+        Get all carshops
+    """
+
     queryset = CarShopModel.objects.all()
     serializer_class = CarShopSerializer
 
 
 class CarShopRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get carshop by ID
+    put:
+        Update carshop by ID
+    patch:
+        Partial update carshop by ID
+    delete:
+        Delete carshop by ID
+    """
+
     queryset = CarShopModel.objects.all()
     serializer_class = CarShopSerializer
 
 
 # Add staff to carshop
 class CarShopAddStaffView(generics.GenericAPIView):
+    """
+    POST:
+        Add staff to carshop
+    """
+
     serializer_class = CarShopSerializer
 
     def get_queryset(self):

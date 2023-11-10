@@ -6,10 +6,13 @@ from apps.users.serializers import UserSerializer
 
 
 class MeView(generics.GenericAPIView):
+    """
+    GET:
+        Get authorized user
+    """
+
     serializer_class = UserSerializer
 
     def get(self, *args, **kwargs):
         serializer = self.get_serializer(self.request.user)
         return Response(serializer.data, status.HTTP_200_OK)
-
-

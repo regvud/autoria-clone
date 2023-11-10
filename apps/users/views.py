@@ -13,18 +13,42 @@ UserModel = get_user_model()
 
 # Get User list
 class UserListCreateView(generics.ListCreateAPIView):
+    """
+    GET:
+        Get all users
+
+    POST:
+        Create user
+    """
+
     queryset = UserModel.objects.all()
     serializer_class = UserSerializer
 
 
 # Retrieve, Update, Destroy user
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        Get User by ID
+    put:
+        Update User by ID
+    patch:
+        Partial update User by ID
+    delete:
+        Delete User by ID
+    """
+
     queryset = UserModel
     serializer_class = UserSerializer
 
 
 # Create car for user
 class UserCarCreateView(generics.GenericAPIView):
+    """
+    POST:
+        Create car for user
+    """
+
     serializer_class = UserSerializer
 
     def post(self, *args, **kwargs):
@@ -41,16 +65,14 @@ class UserCarCreateView(generics.GenericAPIView):
 
         return Response(self.serializer_class(owner).data, status.HTTP_201_CREATED)
 
-    def get(self, *args, **kwargs):
-        owner = get_object_or_404(UserModel, pk=self.kwargs.get("pk"))
-        serializer = self.serializer_class(owner).data
-
-        print(serializer["cars"] == [])
-        return Response("dsdq", status.HTTP_201_CREATED)
-
 
 # Add carshop for user
 class UserAddCarshopView(generics.GenericAPIView):
+    """
+    POST:
+        Create carshop for user
+    """
+
     def post(self, *args, **kwargs):
         user = self.request.user
 
