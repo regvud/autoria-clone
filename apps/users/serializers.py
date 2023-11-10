@@ -39,12 +39,12 @@ class UserSerializer(serializers.ModelSerializer):
             "is_active",
             "is_staff",
             "is_superuser",
-            "last_login",
-            "created_at",
-            "updated_at",
             "profile",
             "cars",
             "carshop",
+            "last_login",
+            "created_at",
+            "updated_at",
         )
 
         read_only_fields = (
@@ -55,12 +55,12 @@ class UserSerializer(serializers.ModelSerializer):
             "is_active",
             "is_staff",
             "is_superuser",
+            "carshop",
+            "cars",
+            "profile",
             "last_login",
             "created_at",
             "updated_at",
-            "profile",
-            "cars",
-            "carshop",
         )
 
         extra_kwargs = {

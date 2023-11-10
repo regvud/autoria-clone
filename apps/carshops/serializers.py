@@ -10,7 +10,17 @@ UserModel = get_user_model()
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = StaffModel
-        fields = ("id", "email", "role", "name", "surname", "age", "phone")
+        fields = (
+            "id",
+            "email",
+            "role",
+            "name",
+            "surname",
+            "age",
+            "phone",
+            "created_at",
+            "updated_at",
+        )
 
 
 class CarShopSerializer(serializers.ModelSerializer):
@@ -18,4 +28,4 @@ class CarShopSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarShopModel
-        fields = ("id", "name", "staff")
+        fields = ("id", "name", "staff", "created_at", "updated_at")

@@ -14,4 +14,5 @@ class CarSerializer(serializers.ModelSerializer):
             "price",
             "currency",
             "body",
+            "created_at",
         )

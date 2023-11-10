@@ -1,3 +1,4 @@
+from django.core.serializers import serialize
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import get_user_model
@@ -28,13 +29,24 @@ class UserCarCreateView(generics.GenericAPIView):
 
     def post(self, *args, **kwargs):
         owner = get_object_or_404(UserModel, pk=self.kwargs.get("pk"))
+        serializer = self.serializer_class(owner).data
+
+        if serializer["cars"] != [] and not owner.is_premium:
+            return Response("Non-premium user can only post one car")
 
         car = self.request.data
         car_serializer = CarSerializer(data=car)
         car_serializer.is_valid(raise_exception=True)
         car_serializer.save(owner=owner)
 
-        return Response(self.serializer_class(owner).data, status.HTTP_200_OK)
+        return Response(self.serializer_class(owner).data, status.HTTP_201_CREATED)
+
+    def get(self, *args, **kwargs):
+        owner = get_object_or_404(UserModel, pk=self.kwargs.get("pk"))
+        serializer = self.serializer_class(owner).data
+
+        print(serializer["cars"] == [])
+        return Response("dsdq", status.HTTP_201_CREATED)
 
 
 # Add carshop for user
@@ -53,7 +65,7 @@ class UserAddCarshopView(generics.GenericAPIView):
         carshop_serializer.is_valid(raise_exception=True)
         carshop_serializer.save(user=user)
 
-        return Response(carshop_serializer.data, status.HTTP_200_OK)
+        return Response(carshop_serializer.data, status.HTTP_201_CREATED)
 
 
 # Change permissions for user
