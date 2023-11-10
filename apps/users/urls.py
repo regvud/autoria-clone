@@ -7,6 +7,8 @@ from .views import (
     UserListCreateView,
     UserRetrieveUpdateDestroyView,
     UserToAdminView,
+    UserToCarshop,
+    UserToNonCarshop,
     UserToNonPremiumView,
     UserToPremiumView,
     UserUnblockView,
@@ -45,5 +47,15 @@ urlpatterns = [
         "/<int:pk>/user_to_nonpremium",
         UserToNonPremiumView.as_view(),
         name="user_to_nonpremium",
+    ),
+    path(
+        "/<int:pk>/user_to_carshop",
+        UserToCarshop.as_view(),
+        name="user_to_carshop",
+    ),
+    path(
+        "/<int:pk>/user_to_noncarshop",
+        UserToNonCarshop.as_view(),
+        name="user_to_noncarshop",
     ),
 ]

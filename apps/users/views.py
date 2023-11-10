@@ -142,3 +142,45 @@ class UserToNonPremiumView(generics.GenericAPIView):
         user.save()
         serializer = self.get_serializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+class UserToCarshop(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        return UserModel.objects.filter(pk=self.kwargs.get("pk"))
+
+    def patch(self, *args, **kwargs):
+        user = self.get_object()
+
+        if user.is_carshop:
+            return Response("User has is_carshop")
+
+        user.is_carshop = True
+        print(user.is_carshop)
+        print(user.is_carshop)
+        print(user.is_carshop)
+        print(user.is_carshop)
+        print(user.is_carshop)
+        print(user.is_carshop)
+        user.save()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+class UserToNonCarshop(generics.GenericAPIView):
+    serializer_class = UserSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        return UserModel.objects.filter(pk=self.kwargs.get("pk"))
+
+    def patch(self, *args, **kwargs):
+        user = self.get_object()
+
+        if not user.is_carshop:
+            return Response("User doesn't have is_carshop")
+
+        user.is_carshop = False
+        user.save()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data, status.HTTP_200_OK)

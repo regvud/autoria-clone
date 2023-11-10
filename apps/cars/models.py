@@ -1,4 +1,5 @@
 import datetime
+from datetime import datetime
 
 from django.core import validators as v
 from django.db import models
@@ -22,7 +23,7 @@ class CarModel(BaseModel):
         max_length=30, validators=[v.RegexValidator(*CarEnum.MODEL.value)]
     )
     year = models.IntegerField(
-        validators=[v.MinValueValidator(1970), v.MaxValueValidator(2023)]
+        validators=[v.MinValueValidator(1970), v.MaxValueValidator(datetime.now().year)]
     )
     price = models.DecimalField(
         max_digits=9,
