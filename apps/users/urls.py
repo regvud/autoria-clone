@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     AdminToUserView,
     UserBlockView,
+    UserCarCreateView,
     UserListCreateView,
     UserRetrieveUpdateDestroyView,
     UserToAdminView,
@@ -14,6 +15,7 @@ from .views import (
 urlpatterns = [
     path("", UserListCreateView.as_view(), name="user_list"),
     path("/<int:pk>", UserRetrieveUpdateDestroyView.as_view(), name="user_retrieve"),
+    path("/<int:pk>/create_car", UserCarCreateView.as_view(), name="user_create_car"),
     path(
         "/<int:pk>/user_to_admin",
         UserToAdminView.as_view(),

@@ -2,6 +2,7 @@ from django.db.transaction import atomic
 from rest_framework import serializers
 from rest_framework.authentication import get_user_model
 
+from apps.cars.serializers import CarSerializer
 from apps.users.models import ProfileModel
 
 UserModel = get_user_model()
@@ -22,6 +23,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
+    cars = CarSerializer(many=True, read_only=True)
 
     class Meta:
         model = UserModel
@@ -38,6 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "profile",
+            "cars",
         )
 
         read_only_fields = (

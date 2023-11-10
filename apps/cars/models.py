@@ -4,6 +4,7 @@ from django.core import validators as v
 from django.db import models
 
 from apps.users.models import UserModel
+from core.enums.car_enum import CarEnum
 from core.models import BaseModel
 
 from .choices import BodyChoices, CurrencyChoices
@@ -14,8 +15,12 @@ class CarModel(BaseModel):
     class Meta:
         db_table = "cars"
 
-    brand = models.CharField(max_length=30)
-    model = models.CharField(max_length=30)
+    brand = models.CharField(
+        max_length=30, validators=[v.RegexValidator(*CarEnum.BRAND.value)]
+    )
+    model = models.CharField(
+        max_length=30, validators=[v.RegexValidator(*CarEnum.MODEL.value)]
+    )
     year = models.IntegerField(
         validators=[v.MinValueValidator(1970), v.MaxValueValidator(2023)]
     )
