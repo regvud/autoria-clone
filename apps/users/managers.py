@@ -1,3 +1,5 @@
+from multiprocessing import Value
+
 from django.contrib.auth.base_user import BaseUserManager
 
 
@@ -20,8 +22,13 @@ class UserManager(BaseUserManager):
 
         if not extra_kwargs["is_superuser"]:
             raise ValueError("Superuser must contain is_superuser status = True")
+
         if not extra_kwargs["is_staff"]:
             raise ValueError("Superuser must contain is_staff status = True")
+
+        if not extra_kwargs["is_active"]:
+            raise ValueError("Superuser must contain is_active status = True")
+
         if not extra_kwargs["is_premium"]:
             raise ValueError("Superuser must contain is_premium status = True")
 
