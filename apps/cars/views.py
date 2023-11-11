@@ -1,9 +1,13 @@
+import math
+
+from django.db.models import Avg, Q
 from rest_framework import generics, status
 from rest_framework.response import Response
 
 from apps.cars.filters import CarFilter
 from apps.cars.models import CarModel
 from apps.cars.serializers import CarSerializer
+from core.permissions import IsPremium
 
 
 class CarListView(generics.ListAPIView):
@@ -33,16 +37,30 @@ class CarRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CarSerializer
 
 
-class CarByAvgPriceView(generics.GenericAPIView):
+class AvgPriceByRequestedCarView(generics.GenericAPIView):
+    permission_classes = (IsPremium,)
     """
     GET:
         Get avg_price of requested car
     """
 
-    serializer_class = CarSerializer
-
     def get(self, *args, **kwargs):
         data = self.request.data
-        queryset = CarModel.filter_objects.avg_price(data["price"])
 
-        return Response(self.serializer_class(queryset).data, status.HTTP_200_OK)
+        if not data:
+            return Response(
+                "{brand: search_brand, model:search_model} must be provided"
+            )
+
+        queryset = CarModel.objects.filter(brand=data["brand"], model=data["model"])
+
+        average_price = math.ceil(
+            queryset.aggregate(avg_value=Avg("price"))["avg_value"]
+        )
+        print(queryset)
+        print(queryset)
+        print(queryset)
+        print(average_price)
+        return Response(
+            f"average price for this car is  {average_price}", status.HTTP_200_OK
+        )

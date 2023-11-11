@@ -5,6 +5,7 @@ from rest_framework.authentication import get_user_model
 from apps.cars.serializers import CarSerializer
 from apps.carshops.serializers import CarShopSerializer
 from apps.users.models import ProfileModel
+from core.services.email_service import EmailService
 
 UserModel = get_user_model()
 
@@ -72,4 +73,5 @@ class UserSerializer(serializers.ModelSerializer):
         profile = validated_data.pop("profile")
         profile = ProfileModel.objects.create(**profile)
         user = UserModel.objects.create_user(profile=profile, **validated_data)
+        EmailService.register_email(user)
         return user

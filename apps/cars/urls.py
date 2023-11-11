@@ -1,10 +1,14 @@
 from django.urls import path
 
-from .views import CarByAvgPriceView, CarListView, CarRetrieveUpdateDestroyView
+from .views import AvgPriceByRequestedCarView, CarListView, CarRetrieveUpdateDestroyView
 
 urlpatterns = [
     path("", CarListView.as_view(), name="cars_list"),
-    path("/avg_price", CarByAvgPriceView.as_view(), name="car_by_avg_price"),
+    path(
+        "/avg_price",
+        AvgPriceByRequestedCarView.as_view(),
+        name="avg_price_by_requested_car",
+    ),
     path(
         "/<int:pk>",
         CarRetrieveUpdateDestroyView.as_view(),
