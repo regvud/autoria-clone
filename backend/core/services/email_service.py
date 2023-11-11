@@ -3,12 +3,14 @@ import os
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 
+from configs.celery import app
 from core.dataclasses.user_dataclass import UserDataclass
 from core.services.jwt_service import ActivateToken, JwtService, RecoveryToken
 
 
 class EmailService:
     @staticmethod
+    @app.task
     def __send_email(to: str, template_name: str, context: {}, subject=""):
         template = get_template(template_name)
         html_content = template.render(context)
@@ -22,7 +24,7 @@ class EmailService:
     def register_email(cls, user: UserDataclass):
         token = JwtService.create_token(user, ActivateToken)
         url = f"http://localhost:3000/activate/{token}"
-        cls.__send_email(
+        cls.__send_email.delay(
             user.email,
             "register.html",
             {"name": user.email, "url": url},
