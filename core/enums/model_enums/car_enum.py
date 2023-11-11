@@ -8,7 +8,7 @@ class CarEnum(Enum):
     )
 
     MODEL = (
-        r"^[A-Z][a-zA-Z\d]{0,20}$",
+        r"^[A-Z][a-zA-Z\d]{1,20}$",
         "Model first letter must be uppercase,  min 1 max 30 characters, digits allowed",
     )
 

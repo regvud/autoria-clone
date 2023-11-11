@@ -34,6 +34,6 @@ class EmailService:
         token = JwtService.create_token(user, RecoveryToken)
         url = f"http://localhost:3000/recover/token={token}"
 
-        cls.__send_email.delay(
+        cls.__send_email(
             user.email, "recover_password.html", {"url": url}, "Recover Password letter"
         )

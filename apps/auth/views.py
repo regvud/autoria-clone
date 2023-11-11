@@ -44,7 +44,7 @@ class RecoverPasswordRequestView(generics.GenericAPIView):
     # provide email method
     def post(self, *args, **kwargs):
         data = self.request.data
-        serializer = self.get_serializer(data=data)
+        serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
         user = get_object_or_404(UserModel, **serializer.data)
 
@@ -60,20 +60,21 @@ class RecoverPasswordRequestView(generics.GenericAPIView):
 
 
 class RecoverPasswordView(generics.GenericAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = PasswordSerializer
 
     def post(self, *args, **kwargs):
         data = self.request.data
 
         if not data:
-            raise ValueError("Provide {'new_password' : '...your_password'} ")
+            raise ValueError("Provide {'password' : '...your_password'} ")
 
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
 
         user = JwtService.validate_token(self.kwargs["token"], RecoveryToken)
 
-        user.set_password(data["new_password"])
+        user.set_password(data["password"])
         user.save()
 
         return Response("password has been changed", status.HTTP_202_ACCEPTED)
