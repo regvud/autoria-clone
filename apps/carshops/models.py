@@ -29,12 +29,18 @@ class StaffModel(BaseModel):
 
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=8, choices=RoleChoices.choices)
-    name = models.CharField(max_length=30, validators=[V.RegexValidator(*UserEnum.NAME.value)])
-    surname = models.CharField(max_length=30, validators=[V.RegexValidator(*UserEnum.NAME.value)])
+    name = models.CharField(
+        max_length=30, validators=[V.RegexValidator(*UserEnum.NAME.value)]
+    )
+    surname = models.CharField(
+        max_length=30, validators=[V.RegexValidator(*UserEnum.NAME.value)]
+    )
     age = models.IntegerField(
         validators=[V.MinValueValidator(18), V.MaxValueValidator(65)]
     )
-    phone = models.CharField(max_length=13)
+    phone = models.CharField(
+        max_length=18, validators=[V.RegexValidator(*CarShopEnum.PHONE.value)]
+    )
     carshop = models.ForeignKey(
         CarShopModel, on_delete=models.CASCADE, related_name="staff"
     )

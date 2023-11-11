@@ -1,13 +1,15 @@
 import math
+from datetime import datetime
 
 from django.db.models import Avg, Q
 from rest_framework import generics, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.cars.filters import CarFilter
 from apps.cars.models import CarModel
 from apps.cars.serializers import CarSerializer
-from core.permissions import IsPremium
+from core.permissions import IsAdmin, IsPremium
 
 
 class CarListView(generics.ListAPIView):
@@ -38,7 +40,7 @@ class CarRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class AvgPriceByRequestedCarView(generics.GenericAPIView):
-    permission_classes = (IsPremium,)
+    permission_classes = (AllowAny,)
     """
     GET:
         Get avg_price of requested car
@@ -57,10 +59,12 @@ class AvgPriceByRequestedCarView(generics.GenericAPIView):
         average_price = math.ceil(
             queryset.aggregate(avg_value=Avg("price"))["avg_value"]
         )
-        print(queryset)
-        print(queryset)
-        print(queryset)
-        print(average_price)
+
+        # print(datetime.date())
+        # print(datetime.date())
+        # print(datetime.date())
+        # print(datetime.date())
+
         return Response(
             f"average price for this car is  {average_price}", status.HTTP_200_OK
         )

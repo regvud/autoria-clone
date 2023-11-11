@@ -14,7 +14,10 @@ class UserEnum(Enum):
         ],
     )
 
-    NAME = (r"^[A-Z][a-z]{1,30}$", "First letter uppercase")
+    NAME = (
+        r"^[A-Z][a-z]{1,30}$",
+        "First letter uppercase",
+    )
 
     def __init__(self, pattern: str, msg: str | list[str]) -> None:
         self.pattern = pattern
