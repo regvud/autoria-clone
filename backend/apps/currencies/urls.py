@@ -1,8 +1,5 @@
-from datetime import datetime
-
-from django.urls import path
-
 from apps.currencies.views import CurrencyFetchApiView, CurrencyListView
+from django.urls import path
 
 urlpatterns = [
     path("", CurrencyListView.as_view(), name="currency_list"),

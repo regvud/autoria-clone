@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.staticfiles",
     "django_filters",
+    "celery",
+    "django_celery_results",
+    "django_celery_beat",
     "rest_framework_simplejwt.token_blacklist",
     # my_apps
     "core",

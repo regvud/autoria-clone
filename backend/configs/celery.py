@@ -9,3 +9,10 @@ app = Celery("settings")
 app.config_from_object("django.conf.settings", namespace="CELERY")
 
 app.autodiscover_tasks()
+
+app.conf.beat_schedule = {
+    "fetch_currencies_every_24_hours": {
+        "task": "core.services.currency_services.fetch_data",
+        "schedule": crontab(minute="*/10"),
+    }
+}
