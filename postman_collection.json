@@ -1,0 +1,874 @@
+{
+	"info": {
+		"_postman_id": "4521c97a-aef3-4561-a813-ffc9bc18ac22",
+		"name": "autoriaCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28775826"
+	},
+	"item": [
+		{
+			"name": "Cars",
+			"item": [
+				{
+					"name": "getAllCars",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/cars",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"cars"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCarByAvgPrice",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "RetriveUpdateDestroyCar",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "brand",
+									"value": "volvo\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/cars/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"cars",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddBrandRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "brand",
+									"value": "Yamaha",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/cars/add_brand",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"cars",
+								"add_brand"
+							],
+							"query": [
+								{
+									"key": "brand",
+									"value": "Yamaha",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CarShops",
+			"item": [
+				{
+					"name": "CarShopsGetAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "park_name",
+									"value": "bolt",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/parks",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"parks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RetriveUpdateDestroyCar",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "addStaffToCarshop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand",
+									"value": "mazeratti",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2001",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "190000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/parks/1/create",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"parks",
+								"1",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "GetUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/users",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"lol@gmail.com\",\r\n    \"password\":\"qwe\",\r\n    \"profile\":{\r\n        \"name\":\"vasya\",\r\n        \"surname\":\"stas\",\r\n        \"age\":16\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/users",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PatchUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/7",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserCreateCar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "brand",
+									"value": "Divo",
+									"type": "text"
+								},
+								{
+									"key": "model",
+									"value": "X5",
+									"type": "text"
+								},
+								{
+									"key": "year",
+									"value": "2023",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Poltava",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "600",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "USD",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "SUV",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/users/7/create_car",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"7",
+								"create_car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserAddCarshop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Lada",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/users/add_carshop",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"add_carshop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserToManager",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/3/user_to_admin",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"3",
+								"user_to_admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ManagerToUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/2/admin_to_user",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"2",
+								"admin_to_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserBlock",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\":\"unblock\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/users/2/block",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"2",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserUnblock",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/unblock",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"unblock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserToPremium",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/2/user_to_premium",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"2",
+								"user_to_premium"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserToNonPremium",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/2/user_to_nonpremium",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"2",
+								"user_to_nonpremium"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserToCarshop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/3/user_to_carshop",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"3",
+								"user_to_carshop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserToNonCarshop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/3/user_to_noncarshop",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"3",
+								"user_to_noncarshop"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "getTokens",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json()",
+									"pm.environment.set('access', res.access)",
+									"pm.environment.set('refresh', res.refresh)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "email",
+								"value": "root@gmail.com",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qwe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/auth",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccess",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refresh",
+									"value": "{{refresh}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/refresh",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActivateUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/auth/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWN0aXZhdGUiLCJleHAiOjE2OTk3MzE3NjgsImlhdCI6MTY5OTcyOTk2OCwianRpIjoiMzdlNzFiZTNiMzhkNDg3MGI4MDc4MDFmOGYxMDgxYmQiLCJ1c2VyX2lkIjo3fQ.OsOizvZhF-v-ANIWdZoLAO8DPGTj8fTkOS2vnYkLKIs",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"activate",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWN0aXZhdGUiLCJleHAiOjE2OTk3MzE3NjgsImlhdCI6MTY5OTcyOTk2OCwianRpIjoiMzdlNzFiZTNiMzhkNDg3MGI4MDc4MDFmOGYxMDgxYmQiLCJ1c2VyX2lkIjo3fQ.OsOizvZhF-v-ANIWdZoLAO8DPGTj8fTkOS2vnYkLKIs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RecoverPasswordRequest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "skilide.skilide@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/recover",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"recover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RecoverChangePassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "new_password",
+									"value": "qwe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/recover/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVjb3ZlciIsImV4cCI6MTY5OTAyNjUzMiwiaWF0IjoxNjk5MDI1OTMyLCJqdGkiOiI4MzQxNzVkYjhiMDY0NDhhOGU1YWE1YzgxODI1NmVkYiIsInVzZXJfaWQiOjN9.6QjalhcFdEzSQblpjgENSyrTPc3u8hzl91TrIQvTlUU",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"recover",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVjb3ZlciIsImV4cCI6MTY5OTAyNjUzMiwiaWF0IjoxNjk5MDI1OTMyLCJqdGkiOiI4MzQxNzVkYjhiMDY0NDhhOGU1YWE1YzgxODI1NmVkYiIsInVzZXJfaWQiOjN9.6QjalhcFdEzSQblpjgENSyrTPc3u8hzl91TrIQvTlUU"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/auth/me",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PrivatBank",
+			"item": [
+				{
+					"name": "FetchCurrencies",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetCurrency",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
