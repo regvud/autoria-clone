@@ -1,8 +1,6 @@
-from django.db.transaction import atomic
+from apps.carshops.models import CarShopModel, StaffModel
 from rest_framework import serializers
 from rest_framework.authentication import get_user_model
-
-from apps.carshops.models import CarShopModel, StaffModel
 
 UserModel = get_user_model()
 
