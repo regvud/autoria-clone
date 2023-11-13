@@ -1,8 +1,9 @@
-from rest_framework import generics, status
-from rest_framework.response import Response
-
 from apps.carshops.models import CarShopModel
 from apps.carshops.serializers import CarShopSerializer, StaffSerializer
+from core.permissions import IsAdmin, IsManager, IsSeller
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 
 # Carshop list
@@ -14,6 +15,7 @@ class CarShopListView(generics.ListAPIView):
 
     queryset = CarShopModel.objects.all()
     serializer_class = CarShopSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class CarShopRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -30,9 +32,9 @@ class CarShopRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = CarShopModel.objects.all()
     serializer_class = CarShopSerializer
+    permission_classes = (IsManager, IsAdmin)
 
 
-# Add staff to carshop
 class CarShopAddStaffView(generics.GenericAPIView):
     """
     POST:
@@ -40,6 +42,7 @@ class CarShopAddStaffView(generics.GenericAPIView):
     """
 
     serializer_class = CarShopSerializer
+    permission_classes = (IsSeller, IsManager, IsAdmin)
 
     def get_queryset(self):
         return CarShopModel.objects.filter(pk=self.kwargs.get("pk"))

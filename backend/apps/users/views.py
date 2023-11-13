@@ -1,17 +1,17 @@
+from apps.cars.serializers import CarSerializer
+from apps.carshops.serializers import CarShopSerializer
+from apps.users.serializers import UserSerializer
+from core.permissions import IsAdmin, IsManager
 from django.core.serializers import serialize
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import get_user_model
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-from apps.cars.serializers import CarSerializer
-from apps.carshops.serializers import CarShopSerializer
-from apps.users.serializers import UserSerializer
 
 UserModel = get_user_model()
 
 
-# Get User list
 class UserListCreateView(generics.ListCreateAPIView):
     """
     GET:
@@ -23,9 +23,9 @@ class UserListCreateView(generics.ListCreateAPIView):
 
     queryset = UserModel.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
 
 
-# Retrieve, Update, Destroy user
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     get:
@@ -42,7 +42,6 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-# Create car for user
 class UserCarCreateView(generics.GenericAPIView):
     """
     POST:
@@ -50,18 +49,22 @@ class UserCarCreateView(generics.GenericAPIView):
     """
 
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
 
     def post(self, *args, **kwargs):
         owner = get_object_or_404(UserModel, pk=self.kwargs.get("pk"))
         serializer = self.serializer_class(owner).data
 
         if serializer["cars"] != [] and not owner.is_premium:
-            return Response("Non-premium user can only post one car")
+            return Response("Non-premium users` can only post one car")
 
         car = self.request.data
         car_serializer = CarSerializer(data=car)
         car_serializer.is_valid(raise_exception=True)
         car_serializer.save(owner=owner)
+
+        owner.is_seller = True
+        owner.save()
 
         return Response(self.serializer_class(owner).data, status.HTTP_201_CREATED)
 
@@ -72,6 +75,8 @@ class UserAddCarshopView(generics.GenericAPIView):
     POST:
         Create carshop for user
     """
+
+    permission_classes = (IsAuthenticated,)
 
     def post(self, *args, **kwargs):
         user = self.request.user
@@ -96,6 +101,7 @@ class UserAddCarshopView(generics.GenericAPIView):
 # Admin permissions
 class UserToAdminView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin,)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -114,6 +120,7 @@ class UserToAdminView(generics.GenericAPIView):
 
 class AdminToUserView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin,)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -133,6 +140,7 @@ class AdminToUserView(generics.GenericAPIView):
 # Block/unblock user
 class UserBlockView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin, IsManager)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -151,6 +159,7 @@ class UserBlockView(generics.GenericAPIView):
 
 class UserUnblockView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin, IsManager)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -170,6 +179,7 @@ class UserUnblockView(generics.GenericAPIView):
 # Premium permissions
 class UserToPremiumView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin, IsManager)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -188,6 +198,7 @@ class UserToPremiumView(generics.GenericAPIView):
 
 class UserToNonPremiumView(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin, IsManager)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -207,6 +218,7 @@ class UserToNonPremiumView(generics.GenericAPIView):
 # Carshop permissions
 class UserToCarshop(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin, IsManager)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))
@@ -225,6 +237,7 @@ class UserToCarshop(generics.GenericAPIView):
 
 class UserToNonCarshop(generics.GenericAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAdmin, IsManager)
 
     def get_queryset(self, *args, **kwargs):
         return UserModel.objects.filter(pk=self.kwargs.get("pk"))

@@ -15,6 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework.permissions import AllowAny
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="AutoRiaClone",
+        default_version="v1",
+        description="AutoRiaClone Project",
+        contact=openapi.Contact(email="vanyasilveron@gmail.com"),
+    ),
+    public=True,
+    permission_classes=[AllowAny],
+)
 
 urlpatterns = [
     path("auth", include("apps.auth.urls")),
@@ -22,4 +36,5 @@ urlpatterns = [
     path("cars", include("apps.cars.urls")),
     path("carshops", include("apps.carshops.urls")),
     path("currencies", include("apps.currencies.urls")),
+    path("doc", schema_view.with_ui("swagger", cache_timeout=0)),
 ]

@@ -1,7 +1,7 @@
 CELERY_BROKER_URL = "redis://redis:6379/0"
-CELERY_RESULTS_BACKEND = "django-db"
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
+result_backend = "django-db"
+accept_content = ["application/json"]
+task_serializer = "json"
+result_serializer = "json"
 
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"

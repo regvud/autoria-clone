@@ -1,11 +1,13 @@
 import os
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import get_template
-
 from configs.celery import app
 from core.dataclasses.user_dataclass import UserDataclass
 from core.services.jwt_service import ActivateToken, JwtService, RecoveryToken
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from rest_framework.authentication import get_user_model
+
+UserModel = get_user_model()
 
 
 class EmailService:

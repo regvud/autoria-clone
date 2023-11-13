@@ -2,11 +2,8 @@ import datetime
 
 import requests
 from configs.celery import app
-from rest_framework.authentication import get_user_model
+    
 
-from .email_service import EmailService
-
-UserModel = get_user_model()
 
 
 class CurrencyService:
@@ -22,11 +19,6 @@ class CurrencyService:
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data from API: {e}")
             return None
-
-    @app.task
-    def spam():
-        for user in UserModel.objects.all():
-            EmailService.__send_email(user.email, "spam.html", {}, "SPAM")
 
 
 # not working

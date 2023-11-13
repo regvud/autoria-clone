@@ -13,6 +13,12 @@ from .models import CurrencyModel
 
 
 class CurrencyFetchApiView(View):
+    """
+    GET:
+      manualy fetch currencies from privat-bank api
+      and save them to db
+    """
+
     def get(self, request):
         date = datetime.date.today().strftime("%d.%m.%Y")
         api_url = f"https://api.privatbank.ua/p24api/exchange_rates?date={date}"
@@ -38,12 +44,11 @@ class CurrencyFetchApiView(View):
             return JsonResponse({"error": f"Error: {e}"}, status=500)
 
 
-class CurrencyUpdate(generics.GenericAPIView):
-    serializer_class = CurrencySerializer
-
-    def get(self, *args, **kwargs):
-        pass
-
 class CurrencyListView(generics.ListAPIView):
+    """
+    GET:
+        get currency list
+    """
+
     queryset = CurrencyModel.objects.all()
     serializer_class = CurrencySerializer
