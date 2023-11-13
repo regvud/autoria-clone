@@ -104,6 +104,11 @@ class AvgPriceByRequestedCarView(generics.GenericAPIView):
 
 
 class AddBrandToListRequestView(generics.GenericAPIView):
+    """
+    POST:
+        send email to admin adout adding new brand
+    """
+
     def post(self, *args, **kwargs):
         data = self.request.data
         serializer = BrandSerializer(data=data)
@@ -112,4 +117,6 @@ class AddBrandToListRequestView(generics.GenericAPIView):
         brand = serializer.data["brand"]
         EmailService.send_brand_request(brand)
 
-        return Response("ok", status.HTTP_200_OK)
+        return Response(
+            "Your request has been sended to administation.", status.HTTP_200_OK
+        )

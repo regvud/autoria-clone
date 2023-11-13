@@ -1,13 +1,12 @@
+from apps.auth.serializers import EmailSerializer, PasswordSerializer
+from apps.users.serializers import UserSerializer
+from core.services.email_service import EmailService
+from core.services.jwt_service import ActivateToken, JwtService, RecoveryToken
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import get_user_model
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-
-from apps.auth.serializers import EmailSerializer, PasswordSerializer
-from apps.users.serializers import UserSerializer
-from core.services.email_service import EmailService
-from core.services.jwt_service import ActivateToken, JwtService, RecoveryToken
 
 UserModel = get_user_model()
 
@@ -26,6 +25,11 @@ class MeView(generics.GenericAPIView):
 
 
 class ActivateUserView(generics.GenericAPIView):
+    """
+    POST:
+        activate user
+    """
+
     permission_classes = (AllowAny,)
 
     def post(self, *args, **kwargs):
@@ -38,6 +42,11 @@ class ActivateUserView(generics.GenericAPIView):
 
 
 class RecoverPasswordRequestView(generics.GenericAPIView):
+    """
+    POST:
+        recover password request
+    """
+
     permission_classes = (AllowAny,)
     serializer_class = EmailSerializer
 
@@ -60,6 +69,11 @@ class RecoverPasswordRequestView(generics.GenericAPIView):
 
 
 class RecoverPasswordView(generics.GenericAPIView):
+    """
+    POST:
+        recover password
+    """
+
     permission_classes = (AllowAny,)
     serializer_class = PasswordSerializer
 

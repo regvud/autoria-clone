@@ -45,7 +45,7 @@ class EmailService:
     @classmethod
     def send_brand_request(cls, brand: str):
         cls.__send_email.delay(
-            "vanyasilveron@gmail.com",
+            "admin@gmail.com",
             "add_brand_request.html",
             {"brand": brand},
             "Add brand to list",

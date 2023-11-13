@@ -16,8 +16,7 @@ from .models import CurrencyModel
 class CurrencyFetchApiView(View):
     """
     GET:
-      manually fetch currencies from privat-bank api
-      and save them to db
+      manually fetch currencies from privat-bank api and save them to db
     """
 
     permission_classes = (IsAdmin | IsManager,)

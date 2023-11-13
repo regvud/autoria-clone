@@ -99,6 +99,11 @@ class UserAddCarshopView(generics.GenericAPIView):
 
 # Admin permissions
 class UserToAdminView(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_staff to 'True'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin,)
 
@@ -109,7 +114,7 @@ class UserToAdminView(generics.GenericAPIView):
         user = self.get_object()
 
         if user.is_staff:
-            return Response("User is admin")
+            return Response("User is manager")
 
         user.is_staff = True
         user.save()
@@ -118,6 +123,11 @@ class UserToAdminView(generics.GenericAPIView):
 
 
 class AdminToUserView(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_staff to 'False'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin,)
 
@@ -128,7 +138,7 @@ class AdminToUserView(generics.GenericAPIView):
         user = self.get_object()
 
         if not user.is_staff:
-            return Response("User is not admin")
+            return Response("User is not manager")
 
         user.is_staff = False
         user.save()
@@ -138,6 +148,11 @@ class AdminToUserView(generics.GenericAPIView):
 
 # Block/unblock user
 class UserBlockView(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_active to 'False'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin, IsManager)
 
@@ -157,6 +172,11 @@ class UserBlockView(generics.GenericAPIView):
 
 
 class UserUnblockView(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_active to 'True'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin, IsManager)
 
@@ -177,6 +197,11 @@ class UserUnblockView(generics.GenericAPIView):
 
 # Premium permissions
 class UserToPremiumView(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_premium to 'True'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin, IsManager)
 
@@ -196,6 +221,11 @@ class UserToPremiumView(generics.GenericAPIView):
 
 
 class UserToNonPremiumView(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_premium to 'False'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin, IsManager)
 
@@ -216,6 +246,11 @@ class UserToNonPremiumView(generics.GenericAPIView):
 
 # Carshop permissions
 class UserToCarshop(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_carshop to 'True'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin, IsManager)
 
@@ -226,7 +261,7 @@ class UserToCarshop(generics.GenericAPIView):
         user = self.get_object()
 
         if user.is_carshop:
-            return Response("User has is_carshop")
+            return Response("User has carshop")
 
         user.is_carshop = True
         user.save()
@@ -235,6 +270,11 @@ class UserToCarshop(generics.GenericAPIView):
 
 
 class UserToNonCarshop(generics.GenericAPIView):
+    """
+    Patch:
+        user.is_carshop to 'False'
+    """
+
     serializer_class = UserSerializer
     permission_classes = (IsAdmin, IsManager)
 
@@ -245,7 +285,7 @@ class UserToNonCarshop(generics.GenericAPIView):
         user = self.get_object()
 
         if not user.is_carshop:
-            return Response("User doesn't have is_carshop")
+            return Response("User doesn't have carshop")
 
         user.is_carshop = False
         user.save()
