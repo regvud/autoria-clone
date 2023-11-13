@@ -2,7 +2,6 @@ from apps.cars.serializers import CarSerializer
 from apps.carshops.serializers import CarShopSerializer
 from apps.users.serializers import UserSerializer
 from core.permissions import IsAdmin, IsManager
-from django.core.serializers import serialize
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import get_user_model

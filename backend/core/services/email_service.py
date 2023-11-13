@@ -38,6 +38,15 @@ class EmailService:
         token = JwtService.create_token(user, RecoveryToken)
         url = f"http://localhost:3000/recover/token={token}"
 
-        cls.__send_email(
+        cls.__send_email.delay(
             user.email, "recover_password.html", {"url": url}, "Recover Password letter"
+        )
+
+    @classmethod
+    def send_brand_request(cls, brand: str):
+        cls.__send_email.delay(
+            "vanyasilveron@gmail.com",
+            "add_brand_request.html",
+            {"brand": brand},
+            "Add brand to list",
         )

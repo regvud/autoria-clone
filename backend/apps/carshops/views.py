@@ -32,7 +32,7 @@ class CarShopRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = CarShopModel.objects.all()
     serializer_class = CarShopSerializer
-    permission_classes = (IsManager, IsAdmin)
+    permission_classes = (IsManager | IsAdmin,)
 
 
 class CarShopAddStaffView(generics.GenericAPIView):
@@ -42,7 +42,7 @@ class CarShopAddStaffView(generics.GenericAPIView):
     """
 
     serializer_class = CarShopSerializer
-    permission_classes = (IsSeller, IsManager, IsAdmin)
+    permission_classes = (IsSeller | IsManager | IsAdmin,)
 
     def get_queryset(self):
         return CarShopModel.objects.filter(pk=self.kwargs.get("pk"))

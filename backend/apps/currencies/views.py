@@ -3,11 +3,12 @@ import datetime
 import requests
 from apps.currencies.serializers import CurrencySerializer
 from configs.celery import app
+from core.permissions import IsAdmin, IsManager
 from core.services.currency_service import CurrencyService
 from django.http import JsonResponse
 from django.views import View
 from rest_framework import generics
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import CurrencyModel
 
@@ -15,12 +16,15 @@ from .models import CurrencyModel
 class CurrencyFetchApiView(View):
     """
     GET:
-      manualy fetch currencies from privat-bank api
+      manually fetch currencies from privat-bank api
       and save them to db
     """
 
+    permission_classes = (IsAdmin | IsManager,)
+
     def get(self, request):
-        date = datetime.date.today().strftime("%d.%m.%Y")
+        date = datetime.date.today() - datetime.timedelta(days=1)
+        date = date.strftime("%d.%m.%Y")
         api_url = f"https://api.privatbank.ua/p24api/exchange_rates?date={date}"
 
         try:
@@ -52,3 +56,4 @@ class CurrencyListView(generics.ListAPIView):
 
     queryset = CurrencyModel.objects.all()
     serializer_class = CurrencySerializer
+    permission_classes = (IsAuthenticated,)
