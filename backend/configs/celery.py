@@ -12,7 +12,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     "fetch_currencies_every_24_hours": {
-        "task": "core.services.currency_service.fetch_data",
-        "schedule": crontab("0", "24", "*", "*", "*"),
+        "task": "core.services.currency_service.execute_currencies",
+        "schedule": crontab(minute=0, hour=23),
     }
 }

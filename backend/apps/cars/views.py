@@ -1,15 +1,13 @@
-import math
-
 from apps.cars.filters import CarFilter
 from apps.cars.models import CarModel
 from apps.cars.serializers import (
     BrandSerializer,
-    CarBrandModelCurrencyFieldsSerializer,
+    CarBrandModelSerializer,
     CarSerializer,
 )
 from core.permissions import IsAdmin, IsManager, IsPremium
+from core.services.avg_price_service import AveragePriceService
 from core.services.email_service import EmailService
-from django.db.models import Avg
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -50,12 +48,8 @@ class AvgPriceByRequestedCarView(generics.GenericAPIView):
         Get avg_price of requested car
     """
 
-    serializer_class = CarBrandModelCurrencyFieldsSerializer
+    serializer_class = CarBrandModelSerializer
     permission_classes = (IsPremium | IsManager | IsAdmin,)
-
-    """
-    not converted into currency
-    """
 
     def get(self, *args, **kwargs):
         data = self.request.data
@@ -67,40 +61,14 @@ class AvgPriceByRequestedCarView(generics.GenericAPIView):
             queryset = CarModel.objects.filter(
                 brand=serializer.data["brand"], model=serializer.data["model"]
             )
+            avg_price = AveragePriceService.avg_price(queryset)
 
-            average_price = math.ceil(
-                queryset.aggregate(avg_value=Avg("price"))["avg_value"]
-            )
         except Exception:
-            return Response({f"Car table is empty"})
+            return Response({"detail": "Car table is empty, add cars for users"})
 
         return Response(
-            f"average price for this car is  {average_price}", status.HTTP_200_OK
+            f"Average price for this car is {avg_price} UAH", status.HTTP_200_OK
         )
-
-    # def get(self, *args, **kwargs):
-    #     data = self.request.data
-
-    #     serializer = self.serializer_class(data=data)
-    #     serializer.is_valid(raise_exception=True)
-
-    #     try:
-    #         queryset = CarModel.objects.filter(
-    #             brand=serializer.data["brand"], model=serializer.data["model"]
-    #         )
-
-    #         # currency = get_object_or_404(CurrencyModel, currency=queryset[0].currency)
-    #         # saleRate = currency.saleRate
-
-    #         print(queryset)
-
-    #         average_price = math.ceil(
-    #             queryset.aggregate(avg_value=Avg("price"))["avg_value"]
-    #         )
-    #     except Exception:
-    #         return Response({f"Car table is empty"})
-
-    #     return Response(f"average price for this car is  ", status.HTTP_200_OK)
 
 
 class AddBrandToListRequestView(generics.GenericAPIView):
