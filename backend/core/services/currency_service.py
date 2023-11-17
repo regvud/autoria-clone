@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 import requests
 from apps.currencies.models import CurrencyModel
@@ -48,4 +49,8 @@ class CurrencyService:
     @staticmethod
     @app.task
     def execute_currencies():
-        CurrencyService.__fetch_data()
+        try:
+            res = CurrencyService.__fetch_data()
+            return res
+        except Exception as e:
+            logging.error(f"Error executing currencies task: {e}")

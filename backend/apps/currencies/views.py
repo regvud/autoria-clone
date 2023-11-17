@@ -1,5 +1,4 @@
 from apps.currencies.serializers import CurrencySerializer
-from configs.celery import app
 from core.permissions import IsAdmin, IsManager
 from core.services.currency_service import CurrencyService
 from rest_framework import generics, status
@@ -19,10 +18,10 @@ class CurrencyFetchApiView(generics.GenericAPIView):
 
     def get(self, request):
         try:
-            response = CurrencyService.__fetch_data()
+            response = CurrencyService.execute_currencies()
             return Response(response, status.HTTP_200_OK)
         except Exception as e:
-            return Response({"error": e})
+            return Response({"error": f"{e}"})
 
 
 class CurrencyListView(generics.ListAPIView):
