@@ -5,7 +5,7 @@ from core.services.jwt_service import ActivateToken, JwtService, RecoveryToken
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authentication import get_user_model
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 UserModel = get_user_model()
@@ -18,6 +18,7 @@ class MeView(generics.GenericAPIView):
     """
 
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get(self, *args, **kwargs):
         serializer = self.get_serializer(self.request.user)
